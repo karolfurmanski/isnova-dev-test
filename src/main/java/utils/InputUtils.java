@@ -21,4 +21,9 @@ public class InputUtils {
 
         return input;
     }
+
+    public static String[] getInputArray() throws IOException, IllegalArgumentException {
+        String input = readLine();
+        return input.split(" ");
+    }
 }
