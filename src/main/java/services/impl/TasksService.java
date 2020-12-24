@@ -1,10 +1,9 @@
 package services.impl;
 
+import models.Pair;
 import services.ITasksService;
-import utils.InputUtils;
 import utils.NumberUtils;
 
-import java.io.IOException;
 import java.util.*;
 
 public class TasksService implements ITasksService {
@@ -12,20 +11,7 @@ public class TasksService implements ITasksService {
     private static final Integer SUM = 13;
 
     @Override
-    public void runTask1() throws IOException, IllegalArgumentException {
-        String[] inputArray = InputUtils.getInputArray();
-        SortedSet<Integer> distinctValues = getDistinctValues(inputArray);
-        printTask1(distinctValues, inputArray.length);
-    }
-
-    @Override
-    public void runTask2() throws IOException, IllegalArgumentException {
-        String[] inputArray = InputUtils.getInputArray();
-        TreeMap<Integer, Integer> distinctValuesWithCounts = getDistinctValuesWithCount(inputArray);
-        printTask2(distinctValuesWithCounts);
-    }
-
-    private SortedSet<Integer> getDistinctValues(String[] array) throws NumberFormatException {
+    public SortedSet<Integer> getDistinctValues(String[] array) throws NumberFormatException {
         SortedSet<Integer> distinctValues = new TreeSet<>();
         int i = 0;
         int j = array.length - 1;
@@ -41,14 +27,18 @@ public class TasksService implements ITasksService {
         return distinctValues;
     }
 
-    private TreeMap<Integer, Integer> getDistinctValuesWithCount(String[] array) throws NumberFormatException {
+    @Override
+    public List<Pair> getPairs(String[] array) throws NumberFormatException {
+        TreeMap<Integer, Integer> distinctValuesWithCounts = getDistinctValuesWithCounts(array);
+        return getPairs(distinctValuesWithCounts);
+    }
+
+    private TreeMap<Integer, Integer> getDistinctValuesWithCounts(String[] array) throws NumberFormatException {
         TreeMap<Integer, Integer> result = new TreeMap<>();
 
         for (String item : array) {
             Integer key = NumberUtils.parseInt(item);
             Integer count = result.get(key);
-
-            if (key > SUM) continue;
 
             if (Objects.nonNull(count))
                 result.put(key, count + 1);
@@ -58,35 +48,22 @@ public class TasksService implements ITasksService {
         return result;
     }
 
-    private void printTask1(SortedSet<Integer> distinctValues, Integer count) {
-        Iterator<Integer> iterator = distinctValues.iterator();
+    private List<Pair> getPairs(TreeMap<Integer, Integer> valuesWithCounts) {
+        List<Pair> pairs = new ArrayList<>();
 
-        while (iterator.hasNext()) {
-            System.out.print(iterator.next());
-            if (iterator.hasNext())
-                System.out.print(" ");
-            else
-                System.out.println();
-        }
-
-        System.out.println("count: " + count);
-        System.out.println("distinct: " + distinctValues.size());
-        System.out.println("min: " + distinctValues.first());
-        System.out.println("max: " + distinctValues.last());
-    }
-
-    private void printTask2(TreeMap<Integer, Integer> treeMap) {
-        treeMap.forEach((key, value) -> {
+        valuesWithCounts.forEach((key, value) -> {
             Integer difference = SUM - key;
-            Integer count = treeMap.get(difference);
+            Integer count = valuesWithCounts.get(difference);
 
             if (Objects.nonNull(value) && Objects.nonNull(count)) {
                 int numberOfIterations = value * count;
                 for (int i = 0; i < numberOfIterations; i++) {
-                    System.out.println(key + " " + difference);
+                    pairs.add(new Pair(key, difference));
                 }
-                treeMap.put(difference, null);
+                valuesWithCounts.put(difference, null);
             }
         });
+
+        return pairs;
     }
 }

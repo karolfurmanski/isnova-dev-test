@@ -26,4 +26,25 @@ public class InputUtils {
         String input = readLine();
         return input.split(" ");
     }
+
+    public static Integer getInputNumber() throws IOException, IllegalArgumentException {
+        String input = readLine();
+        return NumberUtils.parseInt(input);
+    }
+
+    public static int[][] getInputMatrix() throws IOException, IllegalArgumentException {
+        String input = InputUtils.readLine();
+        int numberOfLines = NumberUtils.parseInt(input);
+        int[][] matrix = new int[numberOfLines][numberOfLines];
+
+        for (int i = 0; i < numberOfLines; i++) {
+            String[] pair = InputUtils.getInputArray();
+            int x = NumberUtils.parseInt(pair[0]);
+            int y = NumberUtils.parseInt(pair[1]);
+            matrix[x][y] = 1;
+            matrix[y][x] = 1;
+        }
+
+        return matrix;
+    }
 }

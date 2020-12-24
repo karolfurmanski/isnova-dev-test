@@ -1,12 +1,13 @@
 package services;
 
-import java.io.IOException;
+import models.Pair;
+
+import java.util.List;
+import java.util.SortedSet;
 
 public interface ITasksService {
 
-    public void runTask1() throws IOException, IllegalArgumentException;
+    public SortedSet<Integer> getDistinctValues(String[] array) throws NumberFormatException;
 
-    public void runTask2() throws IOException, IllegalArgumentException;
-
-    public void runTask3();
+    public List<Pair> getPairs(String[] array) throws NumberFormatException;
 }
