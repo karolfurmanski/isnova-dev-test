@@ -10,4 +10,6 @@ public interface ITasksService {
     public SortedSet<Integer> getDistinctValues(String[] array) throws NumberFormatException;
 
     public List<Pair> getPairs(String[] array) throws NumberFormatException;
+
+    public Integer getNumberOfSeparatedGraphs(SortedSet<Pair> edges);
 }

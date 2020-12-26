@@ -55,6 +55,9 @@ public class Main {
                 printTask2(pairs);
                 break;
             case 3:
+                SortedSet<Pair> edges = InputUtils.getInputEdges();
+                int numberOfGraphs = tasksService.getNumberOfSeparatedGraphs(edges);
+                System.out.println(numberOfGraphs);
         }
     }
 

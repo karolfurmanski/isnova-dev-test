@@ -33,6 +33,30 @@ public class TasksService implements ITasksService {
         return getPairs(distinctValuesWithCounts);
     }
 
+    @Override
+    public Integer getNumberOfSeparatedGraphs(SortedSet<Pair> edges) {
+        Iterator<Pair> iterator = edges.iterator();
+        Pair previousPair = null;
+        int numberOfGraphs = 0;
+        HashSet<Integer> vertices = new HashSet<>();
+
+        while (iterator.hasNext()) {
+            Pair pair = iterator.next();
+            if (Objects.isNull(previousPair)) {
+                numberOfGraphs++;
+                previousPair = pair;
+            } else {
+                if (isNewGraph(previousPair, pair, vertices)) {
+                    numberOfGraphs++;
+                }
+            }
+            vertices.add(pair.getFirst());
+            vertices.add(pair.getSecond());
+        }
+
+        return numberOfGraphs;
+    }
+
     private TreeMap<Integer, Integer> getDistinctValuesWithCounts(String[] array) throws NumberFormatException {
         TreeMap<Integer, Integer> result = new TreeMap<>();
 
@@ -65,5 +89,13 @@ public class TasksService implements ITasksService {
         });
 
         return pairs;
+    }
+
+    private boolean isNewGraph(Pair previousPair, Pair pair, HashSet<Integer> vertices) {
+        return !previousPair.getSecond().equals(pair.getFirst()) &&
+                !previousPair.getFirst().equals(pair.getSecond()) &&
+                !previousPair.getSecond().equals(pair.getSecond()) &&
+                !vertices.contains(pair.getFirst()) &&
+                !vertices.contains(pair.getSecond());
     }
 }

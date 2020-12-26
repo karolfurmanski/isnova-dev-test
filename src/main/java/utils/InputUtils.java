@@ -1,8 +1,12 @@
 package utils;
 
+import models.Pair;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class InputUtils {
 
@@ -32,19 +36,19 @@ public class InputUtils {
         return NumberUtils.parseInt(input);
     }
 
-    public static int[][] getInputMatrix() throws IOException, IllegalArgumentException {
+    public static SortedSet<Pair> getInputEdges() throws IOException, IllegalArgumentException {
         String input = InputUtils.readLine();
         int numberOfLines = NumberUtils.parseInt(input);
-        int[][] matrix = new int[numberOfLines][numberOfLines];
+
+        SortedSet<Pair> pairs = new TreeSet<>();
 
         for (int i = 0; i < numberOfLines; i++) {
             String[] pair = InputUtils.getInputArray();
             int x = NumberUtils.parseInt(pair[0]);
             int y = NumberUtils.parseInt(pair[1]);
-            matrix[x][y] = 1;
-            matrix[y][x] = 1;
+            pairs.add(new Pair(Math.min(x, y), Math.max(x, y)));
         }
 
-        return matrix;
+        return pairs;
     }
 }
