@@ -42,16 +42,11 @@ public class TasksService implements ITasksService {
 
         while (iterator.hasNext()) {
             Pair pair = iterator.next();
-            if (Objects.isNull(previousPair)) {
+            if (Objects.isNull(previousPair) || isNewGraph(previousPair, pair, vertices))
                 numberOfGraphs++;
-                previousPair = pair;
-            } else {
-                if (isNewGraph(previousPair, pair, vertices)) {
-                    numberOfGraphs++;
-                }
-            }
             vertices.add(pair.getFirst());
             vertices.add(pair.getSecond());
+            previousPair = pair;
         }
 
         return numberOfGraphs;
