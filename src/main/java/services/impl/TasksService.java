@@ -95,6 +95,7 @@ public class TasksService implements ITasksService {
         return !previousPair.getSecond().equals(pair.getFirst()) &&
                 !previousPair.getFirst().equals(pair.getSecond()) &&
                 !previousPair.getSecond().equals(pair.getSecond()) &&
+                !previousPair.getFirst().equals(pair.getFirst()) &&
                 !vertices.contains(pair.getFirst()) &&
                 !vertices.contains(pair.getSecond());
     }
