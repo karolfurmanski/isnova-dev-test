@@ -24,8 +24,9 @@ public class TasksServiceImpl implements TasksService {
 
         while (i <= j) {
             distinctValues.add(Integer.parseInt(array[i]));
-            if (i != j)
+            if (i != j) {
                 distinctValues.add(Integer.parseInt(array[j]));
+            }
             i++;
             j--;
         }
