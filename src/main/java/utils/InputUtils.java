@@ -1,6 +1,7 @@
 package utils;
 
 import models.Pair;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,32 +21,31 @@ public class InputUtils {
             throw new IOException("The input is invalid. Try again.");
         }
 
-        if (StringUtils.isEmpty(input))
+        if (StringUtils.isBlank(input)) {
             throw new IllegalArgumentException("The input is empty. Try again");
+        }
 
         return input;
     }
 
-    public static String[] getInputArray() throws IOException, IllegalArgumentException {
+    public static String[] getInputSplitBySpaces() throws IOException, IllegalArgumentException {
         String input = readLine();
         return input.split(" ");
     }
 
     public static Integer getInputNumber() throws IOException, IllegalArgumentException {
         String input = readLine();
-        return NumberUtils.parseInt(input);
+        return Integer.parseInt(input);
     }
 
     public static SortedSet<Pair> getInputEdges() throws IOException, IllegalArgumentException {
-        String input = InputUtils.readLine();
-        int numberOfLines = NumberUtils.parseInt(input);
-
+        int numberOfLines = getInputNumber();
         SortedSet<Pair> pairs = new TreeSet<>();
 
         for (int i = 0; i < numberOfLines; i++) {
-            String[] pair = InputUtils.getInputArray();
-            int x = NumberUtils.parseInt(pair[0]);
-            int y = NumberUtils.parseInt(pair[1]);
+            String[] pair = InputUtils.getInputSplitBySpaces();
+            int x = Integer.parseInt(pair[0]);
+            int y = Integer.parseInt(pair[1]);
             pairs.add(new Pair(Math.min(x, y), Math.max(x, y)));
         }
 

@@ -5,20 +5,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import services.ITasksService;
+import services.TasksService;
 
 import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TasksServiceTest {
+class TasksServiceImplTest {
 
-    private static ITasksService tasksService;
+    private static TasksService tasksService;
 
     @BeforeAll
     public static void setUp() {
-        tasksService = new TasksService();
+        tasksService = new TasksServiceImpl();
     }
 
     @ParameterizedTest
@@ -71,12 +71,12 @@ class TasksServiceTest {
 
     private static Stream<Arguments> argumentsForSeparatedGraphs() {
         return Stream.of(
-                Arguments.of(new TreeSet<Pair>(Arrays.asList(
+                Arguments.of(new TreeSet<>(Arrays.asList(
                         new Pair(1, 2),
                         new Pair(2, 3),
                         new Pair(5, 6)
                 )), 2),
-                Arguments.of(new TreeSet<Pair>(Arrays.asList(
+                Arguments.of(new TreeSet<>(Arrays.asList(
                         new Pair(1, 2),
                         new Pair(2, 3),
                         new Pair(3, 4),
@@ -84,13 +84,13 @@ class TasksServiceTest {
                         new Pair(7, 8),
                         new Pair(9, 10)
                 )), 4),
-                Arguments.of(new TreeSet<Pair>(Collections.singletonList(new Pair(1, 2))), 1),
-                Arguments.of(new TreeSet<Pair>(Arrays.asList(
+                Arguments.of(new TreeSet<>(Collections.singletonList(new Pair(1, 2))), 1),
+                Arguments.of(new TreeSet<>(Arrays.asList(
                         new Pair(1, 10),
                         new Pair(2, 3),
                         new Pair(4, 10)
                 )), 2),
-                Arguments.of(new TreeSet<Pair>(Arrays.asList(
+                Arguments.of(new TreeSet<>(Arrays.asList(
                         new Pair(3, 9),
                         new Pair(5, 6),
                         new Pair(6, 6)

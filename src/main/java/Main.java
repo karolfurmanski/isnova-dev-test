@@ -1,6 +1,6 @@
 import models.Pair;
-import services.ITasksService;
-import services.impl.TasksService;
+import services.TasksService;
+import services.impl.TasksServiceImpl;
 import utils.InputUtils;
 
 import java.io.IOException;
@@ -10,27 +10,27 @@ import java.util.SortedSet;
 
 public class Main {
 
-    private ITasksService tasksService;
+    private final TasksService tasksService;
+
+    public Main(TasksService tasksService) {
+        this.tasksService = tasksService;
+    }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Main main = new Main(new TasksServiceImpl());
         main.run();
     }
 
     private void run() {
-        tasksService = new TasksService();
         int action = 0;
-
         do {
             showMenu();
-
             try {
                 action = InputUtils.getInputNumber();
                 runTask(action);
             } catch (IOException | IllegalArgumentException exception) {
                 System.err.println(exception.getMessage());
             }
-
         } while (action != 4);
     }
 
@@ -45,14 +45,14 @@ public class Main {
     private void runTask(int action) throws IOException, IllegalArgumentException {
         switch (action) {
             case 1:
-                String[] task1Input = InputUtils.getInputArray();
+                String[] task1Input = InputUtils.getInputSplitBySpaces();
                 SortedSet<Integer> distinctValues = tasksService.getDistinctValues(task1Input);
-                printTask1(distinctValues, task1Input.length);
+                printSet(distinctValues, task1Input.length);
                 break;
             case 2:
-                String[] task2Input = InputUtils.getInputArray();
+                String[] task2Input = InputUtils.getInputSplitBySpaces();
                 List<Pair> pairs = tasksService.getPairs(task2Input);
-                printTask2(pairs);
+                printList(pairs);
                 break;
             case 3:
                 SortedSet<Pair> edges = InputUtils.getInputEdges();
@@ -61,15 +61,16 @@ public class Main {
         }
     }
 
-    private void printTask1(SortedSet<Integer> distinctValues, int count) {
+    private void printSet(SortedSet<Integer> distinctValues, int count) {
         Iterator<Integer> iterator = distinctValues.iterator();
 
         while (iterator.hasNext()) {
             System.out.print(iterator.next());
-            if (iterator.hasNext())
+            if (iterator.hasNext()) {
                 System.out.print(" ");
-            else
+            } else {
                 System.out.println();
+            }
         }
 
         System.out.println("count: " + count);
@@ -78,7 +79,7 @@ public class Main {
         System.out.println("max: " + distinctValues.last());
     }
 
-    private void printTask2(List<Pair> pairs) {
+    private void printList(List<Pair> pairs) {
         pairs.forEach(pair -> System.out.println(pair.getFirst() + " " + pair.getSecond()));
     }
 }

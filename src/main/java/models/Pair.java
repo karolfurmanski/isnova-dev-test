@@ -1,12 +1,17 @@
 package models;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.NonNull;
+import lombok.Value;
 
-@Data
+@Value
 @AllArgsConstructor
 public class Pair implements Comparable<Pair> {
+
+    @NonNull
     private Integer first;
+
+    @NonNull
     private Integer second;
 
     @Override
