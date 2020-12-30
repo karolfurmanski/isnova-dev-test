@@ -43,7 +43,7 @@ public class InputUtils {
         SortedSet<Pair> pairs = new TreeSet<>();
 
         for (int i = 0; i < numberOfLines; i++) {
-            String[] pair = InputUtils.getInputSplitBySpaces();
+            String[] pair = getInputSplitBySpaces();
             int x = Integer.parseInt(pair[0]);
             int y = Integer.parseInt(pair[1]);
             pairs.add(new Pair(Math.min(x, y), Math.max(x, y)));
