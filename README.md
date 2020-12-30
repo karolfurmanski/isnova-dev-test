@@ -1,6 +1,6 @@
 # isnova-dev-test
 
-##Table of contents
+## Table of contents
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Instruction](#instruction)
